@@ -6,3 +6,11 @@ var options = {
   transports: ['websockets'],
   'force new connection': true
 };
+
+describe('Socket Server', function(){
+
+  it('should add a single user', function(next){
+
+  });
+
+});
