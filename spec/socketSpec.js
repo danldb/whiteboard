@@ -2,23 +2,25 @@ var io = require('socket.io-client');
 
 var socketURL = 'http://0.0.0.0:3000';
 
-var options = {
-  transports: ['websockets'],
+var options ={
+  transports: ['websocket'],
   'force new connection': true
 };
 
-var userName1 = 'Dan';
+var dan = {'name':'Dan'};
+var spike = {'name':'Spike'};
 
-describe('Socket Server', function(){
+describe("Socket Server",function(){
 
-  it('should add a single user', function(next){
-    var connected = false;
-    var user1 = io.connect(socketURL, options);
-      user1.on('connect', function(){
-        connected = true;
-      });
-    expect(connected).toBe(true);
-    next();
+  it('allows 1 user to connect', function(done){
+    var numUsers = 0;
+    var danClient = io.connect(socketURL, options);
+
+    danClient.on('connect', function(data){
+      numUsers += 1;
+      expect(numUsers).toEqual(1);
+      danClient.disconnect();
+      done();
+    });
   });
-
 });
